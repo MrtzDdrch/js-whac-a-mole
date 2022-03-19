@@ -5,13 +5,8 @@ const score = document.querySelector('#score');
 
 let result = 0;
 let hitPosition;
-
-// function: randomly assign #mole to one of the .square
-// assign an image along with the class
-// add event listener
-// it will be timed
-// points need to be given for successful click
-
+let currentTime = 10;
+let timerId = null;
 
 function randomSquare(){
     squares.forEach(square => {
@@ -24,12 +19,12 @@ function randomSquare(){
 }
 
 function moveMole(){
-    let timerId = null;
-    timerId = setInterval(randomSquare, 500);
+    
+    timerId = setInterval(randomSquare, 700);
 }
 
 squares.forEach(square => {
-    square.addEventListener('mousedown' () => {
+    square.addEventListener('mousedown', () => {
         if(square.id == hitPosition){
             result++;
             score.textContent = result;
@@ -38,5 +33,17 @@ squares.forEach(square => {
     })
 });
 
+function countDown(){
+    currentTime--;
+    time.textContent = currentTime;
+
+    if(currentTime == 0){
+        clearInterval(countDownTimerId);
+        clearInterval(time);
+        alert('Game Over! Your final score is ' + result);
+    }
+}
+
+let countDownTimerId = setInterval(countDown, 1000)
 
 moveMole();
